@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>DrunkenCircles</title>
-</head>
-<body>
-    <canvas width="900" height="450"></canvas>
-
+    <title>Asteroids</title>
     <script src="utils.js"></script>
     <script src="moving_object.js"></script>
     <script src="asteroid.js"></script>
     <script src="game.js"></script>
     <script src="ship.js"></script>
+    <script src="keymaster.js"></script>
+</head>
+<body>
+    <canvas width="900" height="450" style="border: thin solid black"></canvas>
 
     <script>
         var canvas = document.getElementsByTagName("canvas")[0];
-        new Asteroids.Game().start(canvas);
+        var ctx = canvas.getContext("2d");
+        new Asteroids.Game(ctx).start(9);
     </script>
 </body>
 </html>

@@ -2,13 +2,19 @@
 
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-  var Asteroid = Asteroids.Asteroid = function (pos, vel, radius, color) {
-    MovingObject.call(this, pos, vel);
-    this.COLOR = color;
-    this.RADIUS = radius;
+  var Asteroid = Asteroids.Asteroid = function (pos, vel, radius) {
+    Asteroids.MovingObject.call(this, pos, vel);
+    // this.pos = pos;
+    // this.vel = vel;
+    this.color = Asteroid.COLOR;
+    this.radius = Asteroid.RADIUS;
   };
 
-  Asteroid.inherits(MovingObject);
+  Asteroid.COLOR = "black";
+
+  Asteroid.RADIUS = 30;
+
+  Asteroid.inherits(Asteroids.MovingObject);
 
   Asteroid.randomAsteroid = function(dimX, dimY){
     var startX = (Math.random() * dimX);
@@ -17,12 +23,12 @@
     var startPos = [startX, startY];
     var startVel = randomVec();
 
-    return (new Asteroid(startPos, startVel, 30, "gray"));
+    return new Asteroid(startPos, startVel);
   }
 
   var randomVec = function () {
     var velX = (4 * Math.random() - 2);
-    var vely = (4 * Math.random() - 2);
+    var velY = (4 * Math.random() - 2);
 
     return [velX, velY];
   }
