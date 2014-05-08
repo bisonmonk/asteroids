@@ -35,6 +35,15 @@
     }
   }
 
+  Game.prototype.removeAsteroid = function(idx) {
+    this.asteroids.splice(idx, 1);
+  }
+
+  Game.prototype.removeBullet = function(idx) {
+    this.bullets.splice(idx, 1);
+  }
+
+
   Game.prototype.draw = function() {
     this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
     var that = this;
@@ -69,14 +78,21 @@
   }
 
   Game.prototype.checkCollisions = function() {
-    var that = this;
-    this.asteroids.forEach(function(asteroid) {
-      if (asteroid.isCollidedWith(that.ship)) {
+
+    for (var i = this.asteroids.length - 1; i >= 0; i--) {
+      if (this.asteroids[i].isCollidedWith(this.ship)) {
         //Change to ALERT()
         console.log("BAM!");
-        that.stop();
+        this.stop();
       }
-    });
+
+      for (var j = this.bullets.length -1; j >= 0; j--) {
+        if (this.bullets[j].isCollidedWith(this.asteroids[i])) {
+          this.removeAsteroid(i);
+          this.removeBullet(j);
+        }
+      }
+    }
   }
 
   Game.prototype.step = function() {
