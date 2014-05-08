@@ -5,6 +5,7 @@
     this.ctx = ctx;
     this.asteroids = [];
     this.ship = new Asteroids.Ship([450, 225],[0,0]);
+    this.bullets = []
   }
 
   Game.DIM_X = 900;
@@ -14,6 +15,14 @@
   Game.prototype.addAsteroids = function(numAsteroids) {
     for (var i =0; i < numAsteroids; i++) {
       this.asteroids.push(Asteroids.Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y));
+    }
+  }
+
+  Game.prototype.fireBullet = function() {
+    console.log("Pew pew");
+    if (!(this.ship.vel[0] === 0 && this.ship.vel[1] === 0)) {
+      this.bullets.push(this.ship.fireBullet());
+      console.log(this.bullets);
     }
   }
 
@@ -32,12 +41,18 @@
     this.asteroids.forEach(function(asteroid) {
       asteroid.draw(that.ctx);
     });
+    this.bullets.forEach(function(bullet) {
+      bullet.draw(that.ctx);
+    });
     this.ship.draw(that.ctx);
   }
 
   Game.prototype.move = function() {
     this.asteroids.forEach(function(asteroid) {
       asteroid.move();
+    });
+    this.bullets.forEach(function(bullet) {
+      bullet.move();
     });
     this.ship.move();
   }
@@ -50,6 +65,7 @@
     key('s', function() { that.ship.power([0,  1]) });
     key('a', function() { that.ship.power([-1, 0]) });
     key('d', function() { that.ship.power([1,  0]) });
+    key('space', function() { that.fireBullet(); } );
   }
 
   Game.prototype.checkCollisions = function() {
