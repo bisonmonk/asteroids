@@ -18,7 +18,15 @@
     this.vel[1] += impulse[1];
   }
 
-  Ship.
+  Ship.prototype.fireBullet = function() {
+    var velX = this.vel[0];
+    var velY = this.vel[1];
+
+    var bulVelX = velX * 3;
+    var bulVelY = velY * 3;
+
+    return new Asteroids.Bullet([this.pos[0], this.pos[1]], [bulVelX, bulVelY]);
+  }
 
 })(this);
 
