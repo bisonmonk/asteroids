@@ -15,9 +15,5 @@
 
   Bullet.inherits(Asteroids.MovingObject);
 
-  Bullet.prototype.hitAsteroid = function() {
-
-  }
-
 })(this);
 
