@@ -30,7 +30,17 @@
     var that = this;
     for (var i = this.asteroids.length-1; i >= 0; i--) {
       if (this.asteroids[i].isOutOfBounds()) {
-        this.asteroids.splice(i, 1);
+        var posX = this.asteroids[i].pos[0];
+        var posY = this.asteroids[i].pos[1];
+        
+        if (posX < 0 || posX > 900) {
+          this.asteroids[i].pos[0] = Math.abs(this.asteroids[i].pos[0] - 900);
+          //this.asteroids[i].pos[1] = Math.abs(this.asteroids[i].pos[1] - 450); 
+        }
+        if (posY < 0 || posY > 450) {
+          this.asteroids[i].pos[1] = Math.abs(this.asteroids[i].pos[1] - 450);
+          //this.asteroids[i].pos[0] = Math.abs(this.asteroids[i].pos[0] - 900); 
+        }
       }
     }
   }
@@ -107,7 +117,6 @@
     game.bindKeyHandlers();
     game.addAsteroids(numAsteroids);
     Game.INTERVAL_ID = setInterval(function() {
-      // console.log("stepping")
       game.step();
     }, 30);
   }
