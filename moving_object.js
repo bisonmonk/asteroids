@@ -3,11 +3,13 @@
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
 
-  var MovingObject = Asteroids.MovingObject = function (pos, vel, radius, color) {
+  var MovingObject = Asteroids.MovingObject = function (pos, vel, radius, color, borderColor, borderWidth) {
     this.pos = pos;
     this.vel = vel;
     this.radius = radius;
     this.color = color;
+    this.borderColor = borderColor;
+    this.borderWidth = borderWidth;
   };
 
   MovingObject.prototype.move = function() {
@@ -33,6 +35,9 @@
 
   MovingObject.prototype.draw = function(ctx) {
     ctx.fillStyle = this.color;
+    ctx.strokeStyle = this.borderColor;
+    ctx.lineWidth = this.borderWidth;
+    
     ctx.beginPath();
 
     // console.log(ctx);
@@ -40,6 +45,8 @@
     ctx.arc(this.pos[0], this.pos[1], this.radius, 0, 2 * Math.PI);
 
     ctx.fill();
+    
+    ctx.stroke();
   }
 
   MovingObject.prototype.isCollidedWith = function(otherObject) {
