@@ -7,10 +7,17 @@
     // this.pos = pos;
     // this.vel = vel;
     this.color = Asteroid.COLOR;
+    this.borderColor = Asteroid.BORDER_COLOR;
+    this.borderWidth = Asteroid.BORDER_WIDTH;
+    
     this.radius = Asteroid.RADIUS;
   };
 
-  Asteroid.COLOR = "black";
+  Asteroid.COLOR = 'rgba(0,0,0,0)';
+  
+  Asteroid.BORDER_COLOR = "#26ff00";
+  
+  Asteroid.BORDER_WIDTH = 2;
 
   Asteroid.RADIUS = 30;
 

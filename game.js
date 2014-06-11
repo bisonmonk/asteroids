@@ -19,14 +19,28 @@
   }
 
   Game.prototype.fireBullet = function() {
-    console.log("Pew pew");
     if (!(this.ship.vel[0] === 0 && this.ship.vel[1] === 0)) {
       this.bullets.push(this.ship.fireBullet());
-      console.log(this.bullets);
+    }
+  }
+  
+  Game.prototype.repositionLostShip = function() {
+    if (this.ship.isOutOfBounds()) {
+      var posX = this.ship.pos[0];
+      var posY = this.ship.pos[1];
+      
+      if (posX < 0 || posX > 900) {
+        this.ship.pos[0] = Math.abs(this.ship.pos[0] - 900);
+        //this.asteroids[i].pos[1] = Math.abs(this.asteroids[i].pos[1] - 450); 
+      }
+      if (posY < 0 || posY > 450) {
+        this.ship.pos[1] = Math.abs(this.ship.pos[1] - 450);
+        //this.asteroids[i].pos[0] = Math.abs(this.asteroids[i].pos[0] - 900); 
+      }
     }
   }
 
-  Game.prototype.removeLostAsteroids = function() {
+  Game.prototype.repositionLostAsteroids = function() {
     var that = this;
     for (var i = this.asteroids.length-1; i >= 0; i--) {
       if (this.asteroids[i].isOutOfBounds()) {
@@ -108,7 +122,8 @@
   Game.prototype.step = function() {
     this.move();
     this.checkCollisions();
-    this.removeLostAsteroids();
+    this.repositionLostAsteroids();
+    this.repositionLostShip();
     this.draw();
   }
 
