@@ -5,7 +5,8 @@
     this.ctx = ctx;
     this.asteroids = [];
     this.ship = new Asteroids.Ship([450, 225],[0,0]);
-    this.bullets = []
+    this.bullets = [];
+    this.bindKeyHandlers();
   }
 
   Game.DIM_X = 900;
@@ -77,6 +78,7 @@
     this.bullets.forEach(function(bullet) {
       bullet.draw(that.ctx);
     });
+    console.log("drawing");
     this.ship.draw(that.ctx);
   }
 
@@ -94,10 +96,14 @@
     var that = this;
     //key('w', function() { root.alert('u pressed w') });
 
-    key('w', function() { that.ship.power([0, -1]) });
-    key('s', function() { that.ship.power([0,  1]) });
-    key('a', function() { that.ship.power([-1, 0]) });
-    key('d', function() { that.ship.power([1,  0]) });
+    key('w', function() { that.ship.power([0, -0.2]) });
+    key('s', function() { that.ship.power([0,  0.2]) });
+    // key('a', function() { that.ship.power([-1, 0]) });
+//     key('d', function() { that.ship.power([1,  0]) });
+
+    key('a', function() { that.ship.turn(-1) });
+    key('d', function() { that.ship.turn(1) });
+
     key('space', function() { that.fireBullet(); } );
   }
 
@@ -129,7 +135,7 @@
 
   Game.prototype.start = function(numAsteroids) {
     var game = this;
-    game.bindKeyHandlers();
+    //game.bindKeyHandlers();
     game.addAsteroids(numAsteroids);
     Game.INTERVAL_ID = setInterval(function() {
       game.step();
