@@ -20,9 +20,7 @@
   }
 
   Game.prototype.fireBullet = function() {
-    if (!(this.ship.vel[0] === 0 && this.ship.vel[1] === 0)) {
-      this.bullets.push(this.ship.fireBullet());
-    }
+    this.bullets.push(this.ship.fireBullet());
   }
   
   Game.prototype.repositionLostShip = function() {
@@ -94,15 +92,12 @@
 
   Game.prototype.bindKeyHandlers = function() {
     var that = this;
-    //key('w', function() { root.alert('u pressed w') });
 
-    key('w', function() { that.ship.power([0, -0.2]) });
-    key('s', function() { that.ship.power([0,  0.2]) });
-    // key('a', function() { that.ship.power([-1, 0]) });
-//     key('d', function() { that.ship.power([1,  0]) });
+    key('w', function() { that.ship.power(-2); });
+    key('s', function() { that.ship.power(2); });
 
-    key('a', function() { that.ship.turn(-1) });
-    key('d', function() { that.ship.turn(1) });
+    key('a', function() { that.ship.turn(1); });
+    key('d', function() { that.ship.turn(-1); });
 
     key('space', function() { that.fireBullet(); } );
   }
@@ -120,6 +115,7 @@
         if (this.bullets[j].isCollidedWith(this.asteroids[i])) {
           this.removeAsteroid(i);
           this.removeBullet(j);
+          this.asteroids.push(Asteroids.Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y));
         }
       }
     }

@@ -19,45 +19,64 @@
   Ship.BORDER_COLOR = "#26ff00";
   Ship.BORDER_WIDTH = 0;
   
-  Ship.HEIGHT = this.radius * (Math.sqrt(3)/2);
-  
-  Ship.COORDS = [[-this.radius/2, Ship.HEIGHT/2], 
-                 [ this.radius/2, Ship.HEIGHT/2],
-                 [ 0, -Ship.HEIGHT/2]];
+  Ship.RADIANS = -Math.PI / 180;
 
   Ship.inherits(Asteroids.MovingObject);
   
   Ship.prototype.draw = function(ctx) {
+    var height = this.radius * (Math.sqrt(3)/2);
+    
+    ctx.save();
+    
     ctx.fillStyle = this.color;
     ctx.strokeStyle = this.borderColor;
     ctx.lineWidth = this.borderWidth;
     
-    var width = 20;
-    var corners = 3;
-    var origin_x = this.pos[0];
-    var origin_y = this.pos[1];
-    var points = [];
-    var offset = corners / 2 * 1.5; 
+    //ctx.save();
+        
+    ctx.translate(this.pos[0], this.pos[1]);
+    ctx.rotate(-this.angle * Ship.RADIANS);
     
-    offset += this.angle * Math.PI / 180;
-    //d = (d)? true : false;  
     ctx.beginPath();
     
-    for (var i = 0; i < corners; i++) {
-      var x = origin_x + Math.cos((Math.PI * 2 / corners) * (i + (offset + this.angle))) * this.radius;
-      var y = origin_y + Math.sin((Math.PI * 2 / corners) * (i + (offset + this.angle))) * this.radius;
-      
-      if (i === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
-      points.push([x, y]);
-    }
+    ctx.moveTo(0, -height/2);
+    ctx.lineTo(-this.radius/2, height/2);
+    ctx.lineTo(this.radius/2, height/2);
+    ctx.lineTo(0, -height/2);
     
-    ctx.lineTo(points[0][0], points[0][1]);
     ctx.stroke();
+    ctx.fill();
+    
     ctx.closePath();
+    //ctx.save();
+    ctx.restore();
+    
+    // var width = 20;
+    // var corners = 3;
+    // var origin_x = this.pos[0];
+    // var origin_y = this.pos[1];
+    // var points = [];
+    // var offset = corners / 2 * 1.5; 
+    // 
+    // offset += this.angle * Math.PI / 180;
+    // //d = (d)? true : false;  
+    // ctx.beginPath();
+    // 
+    // for (var i = 0; i < corners; i++) {
+    //   var x = origin_x + Math.cos((Math.PI * 2 / corners) * (i + (offset + this.angle))) * this.radius;
+    //   var y = origin_y + Math.sin((Math.PI * 2 / corners) * (i + (offset + this.angle))) * this.radius;
+    //   
+    //   if (i === 0) {
+    //     ctx.moveTo(x, y);
+    //   } else {
+    //     ctx.lineTo(x, y);
+    //   }
+    //   points.push([x, y]);
+    // }
+    // 
+    // ctx.lineTo(points[0][0], points[0][1]);
+    // ctx.stroke();
+    // ctx.closePath();
     
     // var height = this.radius * (Math.sqrt(3)/2);
     // 
@@ -108,9 +127,11 @@
   }
   
   Ship.prototype.turn = function(sign) {
-    this.angle += sign * 8;// ((Math.PI / 80));
-    console.log("angle");
-    console.log(this.angle);
+    this.angle -= sign * 15;
+    
+    // this.angle += sign * 8;// ((Math.PI / 80));
+    // console.log("angle");
+    // console.log(this.angle);
     // if (this.angle >= 180) {
     //   this.angle -= 180;
     // } else if (this.angle <= 180) {
@@ -119,16 +140,19 @@
   }
  
   Ship.prototype.power = function(impulse) {
-    this.vel[0] += impulse[0];
-    this.vel[1] += impulse[1];
+    this.vel[0] += impulse * Math.sin(this.angle * Ship.RADIANS);
+    this.vel[1] += impulse * Math.cos(this.angle * Ship.RADIANS);
   }
 
   Ship.prototype.fireBullet = function() {
-    var velX = this.vel[0];
-    var velY = this.vel[1];
+    // var velX = 2;//this.vel[0];
+    // var velY = 2;//this.vel[1];
+      
+    var bulVelX = -Math.sin(this.angle * Ship.RADIANS) * 10;
+    var bulVelY = -Math.cos(this.angle * Ship.RADIANS) * 10;
 
-    var bulVelX = velX * 3;
-    var bulVelY = velY * 3;
+    // var bulVelX = velX * 3;
+    // var bulVelY = velY * 3;
 
     return new Asteroids.Bullet([this.pos[0], this.pos[1]], [bulVelX, bulVelY]);
   }

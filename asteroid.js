@@ -24,8 +24,13 @@
   Asteroid.inherits(Asteroids.MovingObject);
 
   Asteroid.randomAsteroid = function(dimX, dimY){
+    //900 * 450
+    
     var startX = (Math.random() * dimX);
-    var startY = (Math.random() * dimY);
+    
+    //var startY = (Math.random() * dimY);
+    var startY = (dimY);
+    
 
     var startPos = [startX, startY];
     var startVel = randomVec();

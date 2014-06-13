@@ -22,5 +22,3 @@ function Asteroid () {};
 Asteroid.inherits(MovingObject);
 
 s = new Ship(20, 100, "blue");
-
-console.log(s);

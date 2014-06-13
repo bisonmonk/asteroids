@@ -16,7 +16,7 @@
   Bullet.BORDER_COLOR = "red";
   Bullet.BORDER_WIDTH = 0;
   
-  Bullet.RADIUS = 3;
+  Bullet.RADIUS = 2;
   Bullet.COLOR = "red";
 
   Bullet.inherits(Asteroids.MovingObject);
